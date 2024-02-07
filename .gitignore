@@ -1,0 +1,11 @@
+# goland
+.idea/*
+
+# generated artifacts
+.dist/*
+.tmp/*
+
+# local
+platforms.yaml
+*.sh
+*.pem

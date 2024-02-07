@@ -1,0 +1,22 @@
+### Changes Proposed
+
+Applying the following changes to the project:
+
+{{ range $recipe := .Recipes -}}
+    - {{ $recipe }} (Recipe)
+{{ end -}}
+{{- range $style := .Styles -}}
+    - {{ $style }} (Style)
+{{ end }}
+
+{{ if .Footer }}
+---
+
+{{- if .FooterCustom }}
+{{ .FooterCustom }}
+{{- else if eq .PlatformSlug "github" }}
+This PR has been generated automatically by the [PrimeLib GitHub App](https://github.com/apps/primelib-generator).
+{{- else if eq .PlatformSlug "gitlab" }}
+This MR has been generated automatically by the PrimeLib GitLab App.
+{{- end }}
+{{- end }}

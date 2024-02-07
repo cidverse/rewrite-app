@@ -1,0 +1,46 @@
+initscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2" }
+    }
+    dependencies {
+        classpath("org.openrewrite:plugin:6.8.2")
+    }
+}
+
+rootProject {
+    plugins.apply(org.openrewrite.gradle.RewritePlugin)
+    dependencies {
+        rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.6.4"))
+        rewrite("org.openrewrite:rewrite-java:8.15.2")
+        rewrite("org.openrewrite:rewrite-gradle:8.15.2")
+        rewrite("org.openrewrite.recipe:rewrite-migrate-java:2.8.0")
+        rewrite("org.openrewrite.recipe:rewrite-static-analysis:1.3.0")
+        rewrite("org.openrewrite.recipe:rewrite-spring:5.4.0")
+        rewrite("org.openrewrite.recipe:rewrite-testing-frameworks:2.3.2")
+        rewrite("org.openrewrite.recipe:rewrite-logging-frameworks:2.4.3")
+        rewrite("org.openrewrite.recipe:rewrite-hibernate:1.1.5")
+        rewrite("org.openrewrite.recipe:rewrite-recommendations:1.2.0")
+    }
+
+    rewrite {
+        // set toe value provided in -Drewrite.configFile, default to rewrite.yml in rootProject dir
+        configFile = "{{ .ConfigFile }}"
+
+        // recipes
+        activeRecipe({{- range $index, $elem := .Recipes -}}{{if $index}}, {{end}}"{{ $elem }}"{{ end }})
+
+        // styles
+        activeStyle({{- range $index, $elem := .Styles -}}{{if $index}}, {{end}}"{{ $elem }}"{{ end }})
+
+        // file exclusions
+        exclusion({{- range $index, $elem := .ExcludeFiles -}}{{if $index}}, {{end}}"{{ $elem }}"{{ end }})
+    }
+
+    afterEvaluate {
+        if (repositories.isEmpty()) {
+            repositories {
+                mavenCentral()
+            }
+        }
+    }
+}

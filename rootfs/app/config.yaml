@@ -1,0 +1,32 @@
+recipes:
+  # gradle
+  - org.openrewrite.gradle.EnableGradleBuildCache # enable gradle build cache
+  - org.openrewrite.gradle.EnableGradleParallelExecution # enable parallel execution
+  - org.openrewrite.gradle.DependencyUseStringNotation # use string notation for dependencies
+  # code cleanup
+  - io.github.cidverse.recipe.CodeCleanup
+  - io.github.cidverse.recipe.UseStaticImport # use static imports for certain libraries
+  # logging
+  - org.openrewrite.java.logging.slf4j.Slf4jBestPractices # slf4j best practices
+  - org.openrewrite.java.logging.slf4j.Log4jToSlf4j # log4j to slf4j migration
+  - org.openrewrite.java.logging.slf4j.Log4j2ToSlf4j1 # log4j2 to slf4j migration
+  # junit
+  - org.openrewrite.java.testing.junit5.JUnit4to5Migration # junit4 to junit5 migration
+  - org.openrewrite.java.testing.junit5.JUnit5BestPractices # junit5 best practices
+  - org.openrewrite.java.testing.junit5.CleanupAssertions # simplify assertions
+  # hibernate
+  - org.openrewrite.hibernate.MigrateToHibernate62
+  # java17
+  #- org.openrewrite.java.migrate.UpgradeToJava17 # use java17 language features
+  # style
+  - org.openrewrite.java.format.AutoFormat
+  - org.openrewrite.java.format.BlankLines
+  - org.openrewrite.java.format.RemoveTrailingWhitespace
+  - org.openrewrite.java.format.WrappingAndBraces
+
+styles:
+  - io.github.cidverse.style.DefaultFormat
+
+excludeFiles:
+  - "**/*.kt"
+  - "**/*.json"
